@@ -3,12 +3,12 @@
 
     <groupId>ch.carnet.kasparscherrer</groupId>
     <artifactId>language-select</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.1</version>
     <name>language-select</name>
-    <description>Integration of paper-slider for Vaadin platform</description>
+    <description>Language Picker for Vaadin 14</description>
 
     <properties>
-        <vaadin.version>14.0.2</vaadin.version>
+        <vaadin.version>14.0.0</vaadin.version>
 
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -220,7 +220,7 @@
                         </executions>
                         <configuration>
                             <quiet>true</quiet>
-                            <additionalparam>-Xdoclint:none</additionalparam>
+                            <doclint>none</doclint>
                         </configuration>
                     </plugin>
                 </plugins>
@@ -291,10 +291,9 @@
                         </executions>
                     </plugin>
 
-                    <plugin>
+                    <!--<plugin>
                         <groupId>com.lazerycode.selenium</groupId>
-                        <artifactId>driver-binary-downloader-maven-plugin
-                        </artifactId>
+                        <artifactId>driver-binary-downloader-maven-plugin</artifactId>
                         <version>1.0.17</version>
                         <configuration>
                             <onlyGetDriversForHostOperatingSystem>
@@ -317,8 +316,8 @@
                                 </goals>
                             </execution>
                         </executions>
-                    </plugin>
-
+                    </plugin>-->
+<!--
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-failsafe-plugin</artifactId>
@@ -335,13 +334,13 @@
                             <trimStackTrace>false</trimStackTrace>
                             <enableAssertions>true</enableAssertions>
                             <systemPropertyVariables>
-                                <!-- Pass location of downloaded webdrivers to the tests -->
+                                &lt;!&ndash; Pass location of downloaded webdrivers to the tests &ndash;&gt;
                                 <webdriver.chrome.driver>
                                     ${webdriver.chrome.driver}
                                 </webdriver.chrome.driver>
                             </systemPropertyVariables>
                         </configuration>
-                    </plugin>
+                    </plugin>-->
                     <plugin>
                         <artifactId>maven-resources-plugin</artifactId>
                         <version>3.1.0</version>

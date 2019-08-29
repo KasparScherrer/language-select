@@ -1,3 +1,19 @@
+/**
+ * Copyright 2019 Kaspar Scherrer
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package ch.carnet.kasparscherrer;
 
 import com.vaadin.flow.component.UI;
@@ -8,6 +24,7 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 
+import java.util.Collection;
 import java.util.Locale;
 
 /**
@@ -35,18 +52,13 @@ public class LanguageSelect extends Select<Locale> {
         return hLayout;
     });
 
-    public LanguageSelect() {
-        super();
-        prepareLanguageSelection();
-    }
-
-    /**
-     * You can also use setItems(Locale... items) after instantiation.
-     * @param items
-     */
     public LanguageSelect(Locale... items){
         super(items);
-        prepareLanguageSelection();
+        setEmptySelectionAllowed(false);
+        setRenderer(this.languageRenderer);
+        setValue(UI.getCurrent().getLocale());
+        // important that valuechangeListener is defined after setValue
+        addValueChangeListener(change -> UI.getCurrent().getSession().setLocale(change.getValue()));
     }
 
     /**
@@ -58,12 +70,4 @@ public class LanguageSelect extends Select<Locale> {
         // TODO: as soon as Select::refreshItems is public, use that!
         //  see https://github.com/vaadin/flow/issues/6337
     }
-
-    private void prepareLanguageSelection() {
-        setEmptySelectionAllowed(false);
-        setRenderer(this.languageRenderer);
-        setValue(UI.getCurrent().getLocale());
-        addValueChangeListener(change -> UI.getCurrent().getSession().setLocale(change.getValue()));
-    }
-
 }

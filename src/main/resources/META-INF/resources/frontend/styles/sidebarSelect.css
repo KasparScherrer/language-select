@@ -1,0 +1,8 @@
+:host {
+    --lumo-contrast-10pct: #506570;
+    --lumo-body-text-color: white;
+}
+
+[part="value"] vaadin-item {
+    padding: 0;
+}

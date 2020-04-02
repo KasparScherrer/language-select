@@ -17,14 +17,16 @@
 package ch.carnet.kasparscherrer;
 
 import com.vaadin.flow.component.UI;
+import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
+import com.vaadin.flow.server.VaadinService;
 
-import java.util.Collection;
+import javax.servlet.http.Cookie;
 import java.util.Locale;
 
 /**
@@ -40,7 +42,10 @@ import java.util.Locale;
  * The keys must be named 'LanguageSelect.[language_code]'
  * - for example LanguageSelect.en=English in the English resourcebundle-file, and LanguageSelect.en=Inglés  in the Spanish resourcebundle-file
  */
+
+@CssImport(value = "./styles/sidebarSelect.css", themeFor = "vaadin-select")
 public class LanguageSelect extends Select<Locale> {
+    public static final String LANGUAGE_COOKIE_NAME = "PreferredLanguage";
 
     private ComponentRenderer<HorizontalLayout, Locale> languageRenderer = new ComponentRenderer<>(item -> {
         HorizontalLayout hLayout = new HorizontalLayout();
@@ -58,7 +63,16 @@ public class LanguageSelect extends Select<Locale> {
         setRenderer(this.languageRenderer);
         setValue(UI.getCurrent().getLocale());
         // important that valuechangeListener is defined after setValue
-        addValueChangeListener(change -> UI.getCurrent().getSession().setLocale(change.getValue()));
+        addValueChangeListener(change -> {
+            // changes locale of current session
+            UI.getCurrent().getSession().setLocale(change.getValue());
+
+            // sets a cookie that will make any subsequent visit to this page use this selected language
+            Cookie languageCookie = new Cookie(LANGUAGE_COOKIE_NAME, change.getValue().getLanguage());
+            languageCookie.setMaxAge(60 * 60 * 24 * 7 * 52); // save language preference ~1 year
+            languageCookie.setPath("/");
+            VaadinService.getCurrentResponse().addCookie(languageCookie);
+        });
     }
 
     /**
@@ -67,6 +81,7 @@ public class LanguageSelect extends Select<Locale> {
      */
     public void refresh(){
         setRenderer(this.languageRenderer);
+
         // TODO: as soon as Select::refreshItems is public, use that!
         //  see https://github.com/vaadin/flow/issues/6337
     }

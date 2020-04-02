@@ -3,7 +3,7 @@
 
     <groupId>ch.carnet.kasparscherrer</groupId>
     <artifactId>language-select</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.3</version>
     <name>language-select</name>
     <description>Language Picker for Vaadin 14</description>
 
@@ -19,9 +19,6 @@
 
         <jetty.version>9.4.15.v20190215</jetty.version>
     </properties>
-    <organization>
-        <name>Kaspar Scherrer</name>
-    </organization>
     <licenses>
         <license>
             <name>Apache 2</name>
@@ -248,6 +245,7 @@
                         <executions>
                             <execution>
                                 <goals>
+                                    <goal>prepare-frontend</goal>
                                     <goal>build-frontend</goal>
                                 </goals>
                             </execution>
